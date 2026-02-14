@@ -1,0 +1,147 @@
+:root {
+    --primary-color: #ff4b5c;
+    --bg-color: #fce4ec;
+    --envelope-color: #ff8a80;
+    --envelope-dark: #ff5252;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--bg-color);
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* Zarf Konteynırı */
+.envelope-wrapper {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.envelope-wrapper:hover {
+    transform: translateY(-10px);
+}
+
+.envelope {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background-color: var(--envelope-color);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Zarfın Kapağı */
+.envelope::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    z-index: 2;
+    border-top: 110px solid var(--envelope-dark);
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    transform-origin: top;
+    transition: transform 0.5s 0.3s;
+}
+
+/* Zarfın Yan Kanatları */
+.envelope::after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    border-top: 100px solid transparent;
+    border-left: 150px solid var(--envelope-color);
+    border-right: 150px solid var(--envelope-color);
+    border-bottom: 100px solid #ff7043;
+    border-radius: 10px;
+}
+
+/* Mektup Kağıdı */
+.letter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 260px;
+    height: 180px;
+    background: white;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.6s;
+    z-index: 0;
+    box-sizing: border-box;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.letter h2 {
+    font-size: 18px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.letter p {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Zarfın üzerindeki küçük kalp */
+.heart-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    transform: translate(-50%, -50%) rotate(45deg);
+    z-index: 4;
+    transition: opacity 0.3s;
+}
+
+.heart-icon::before, .heart-icon::after {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    border-radius: 50%;
+}
+
+.heart-icon::before { left: -25px; }
+.heart-icon::after { top: -25px; }
+
+/* Açılma Efekti */
+.envelope-wrapper.open .envelope::before {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.envelope-wrapper.open .letter {
+    transform: translate(-50%, -120px);
+    z-index: 2;
+}
+
+.envelope-wrapper.open .heart-icon {
+    opacity: 0;
+}
+
+/* Arkaplan Kalp Animasyonu */
+.floating-heart {
+    position: absolute;
+    color: var(--primary-color);
+    font-size: 20px;
+    animation: float 5s infinite linear;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
